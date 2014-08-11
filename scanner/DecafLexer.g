@@ -1,7 +1,8 @@
-lexer grammar Decaf;
+lexer grammar DecafLexer;
 
 @lexer::header{
   package compiler.scanner;
+  import java.util.LinkedList;
 }
 
 
@@ -60,6 +61,20 @@ BOOLEANLITERAL:  ('true'|'false') ;
 HEXLIT 		  :	 '0'('x'|'X')(DIGIT|HEX)(DIGIT|HEX)* ;
 INTLITERAL 	  :  (DIGIT+|'0'('x'|'X')HEX+) ;
 DECIMALIT 	  :  (DIGIT)(DIGIT)*           ;
+
+//RESERVADAS
+VAR 		  :  (LETTER|'_')(LETTER|'_'|DIGIT)*;
+CLASS		  :  ('class'|'CLASS');
+INT 		  :  ('INT'|'int');
+BOOLEAN       :  ('boolean'|'BOOLEAN');
+VOID 		  :  ('VOID'|'void');
+IF			  :  ('if'|'IF');
+FOR			  :  ('for'|'FOR');
+RETURN		  :  ('return'|'RETURN');
+BREAK		  :  ('BREAK'|'break');
+CONTINUE	  :  ('continue'|'CONTINUE');
+CALLOUT		  :  ('CALLOUT'|'callout');
+ELSE		  :  ('else'|'ELSE');
 
 //SKIP
 ESPACIOS	  :   ( '\t' | ' ' | '\r' | '\n')+ { skip(); } ;
