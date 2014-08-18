@@ -19,11 +19,11 @@ public class Compiler {
 
 	switch (argumento){
 		case "-o":
-		Scanner scan = new Scanner("hola");
-		CC4Parser parser = new CC4Parser(scan);
+		Scanner scan = new Scanner("test","output.txt");
+		//CC4Parser parser = new CC4Parser(scan);
 		
 		option=1;
-		System.out.println("option O ");
+		//System.out.println("option O ");
 		break;
 
 		case "-target":

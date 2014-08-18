@@ -1,7 +1,16 @@
 package compiler.scanner;
-
+import java.io.*;
 import java.io.File;
 import java.io.FileWriter;
+import org.antlr.v4.runtime.Lexer;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.atn.*;
+import org.antlr.v4.runtime.dfa.DFA;
+import org.antlr.v4.runtime.misc.*;
+
 
 
 
@@ -9,22 +18,75 @@ public class Scanner  {
 	public String nameFile;
 	public File archivo;
 
-public Scanner (String fileName) {
-	nameFile=fileName+".txt";
-	try{
-	 archivo=new File(fileName+".txt");
-	FileWriter escribir=new FileWriter(archivo,true);
+public Scanner (String name, String outPutName) {
 
-	escribir.write("stage: Scanner");
-	escribir.close();
+	String fname = name;
+  String token;
+  String dato = "";
+  
+ org.antlr.v4.runtime.CharStream filename=null;
+	if (!fname.contains("."))
+	fname=fname+".txt";
+  
+try{
+  filename =new ANTLRFileStream(fname);
+}catch(IOException e){
+  e.printStackTrace();
+}
 
-	 }
-	 catch(Exception e)
-	{
-	System.out.println("Error al escribir");
-	}
+  try{
+      DecafLexer lexer = new DecafLexer(filename);
+   while (lexer.nextToken().getType() != Token.EOF || lexer.error.size() > 0){
+      dato = lexer.token;
+
+
+
+      if(!dato.equals("")){
+        System.out.println("SI "+dato);
+        ptrmsj(dato, outPutName);
+      
+      }
+
+
+      
+    }
+
+  }catch(ArrayIndexOutOfBoundsException aiobe){
+      System.err.println("Must provide a valid path to the filename with the tokens");
+      System.exit(1);
+  }catch(Exception e){
+      System.err.println("Must provide a valid path to the filename with the tokens");
+      System.exit(1);
+  }
 
 }
+
+
+void  ptrmsj(String mensaje, String archivo)
+  {
+
+  File f;
+  f = new File(archivo);
+  try{
+
+  FileWriter w = new FileWriter(f,true);
+  BufferedWriter bw = new BufferedWriter(w);
+  PrintWriter wr = new PrintWriter(bw);  
+  
+
+    wr.append(mensaje+"\n"); //concatenamos en el archivo sin borrar lo existente
+    
+    wr.close();
+
+    bw.close();
+
+    }catch(IOException e){};
+
+
+
+  }
+
+
 
 public String elArchivo(){
 	return nameFile;

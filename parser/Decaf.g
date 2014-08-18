@@ -2,6 +2,7 @@ parser grammar Decaf;
 
 options {
 	tokenVocab=DecafLexer;
+	
 }
 
 @parser::header {
