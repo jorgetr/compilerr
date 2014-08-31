@@ -87,6 +87,7 @@ BREAK		  :  ('break') 							{LisToken(getLine(),getText());};
 CONTINUE	  :  ('continue') 						{LisToken(getLine(),getText());};
 CALLOUT		  :  ('callout') 						{LisToken(getLine(),getText());};
 ELSE		  :  ('else') 							{LisToken(getLine(),getText());};
+PROGRAM		  :  ('Program') 							{LisToken(getLine(),getText());};
 
 //SKIP
 ESPACIOS	  :   ( '\t' | ' ' | '\r' | '\n')+ { skip() ;} ;

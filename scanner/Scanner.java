@@ -18,7 +18,7 @@ public class Scanner  {
 	public String nameFile;
 	public File archivo;
 
-public Scanner (String name, String outPutName) {
+public Scanner (String name, String outPutName, boolean debug) {
 
 	String fname = name;
   String token;
@@ -37,12 +37,17 @@ try{
   try{
       DecafLexer lexer = new DecafLexer(filename);
    while (lexer.nextToken().getType() != Token.EOF || lexer.error.size() > 0){
+
       dato = lexer.token;
 
 
+     
 
       if(!dato.equals("")){
-        System.out.println("SI "+dato);
+        
+          if (debug)
+            DebugScan(dato):
+
         ptrmsj(dato, outPutName);
       
       }
@@ -62,10 +67,18 @@ try{
 }
 
 
+public void DebugScan(String texto){
+    System.out.println(texto);
+  }
+
+
 void  ptrmsj(String mensaje, String archivo)
   {
 
   File f;
+if (!archivo.contains("."))
+  archivo=archivo+".txt";
+
   f = new File(archivo);
   try{
 
