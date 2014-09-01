@@ -20,7 +20,7 @@ import java.util.Stack;
 
 public class CC4Parser  {
 
-public CC4Parser (Scanner token) {
+public CC4Parser (Scanner token,boolean debug) {
 	String input = token.nameFileInput;
 	String output = token.nameFileOutput;
 	
@@ -45,6 +45,9 @@ public CC4Parser (Scanner token) {
 
 				String aux =(String)treeParse.pop();
 			ptrmsj(aux, output);
+			  if (debug)
+            DebugParse(dato);
+
 			}
 
 			
@@ -54,6 +57,9 @@ public CC4Parser (Scanner token) {
 	
 
 
+  }
+public void DebugParse(String texto){
+    System.out.println("Debugging Parser >"+texto);
   }
 
   void  ptrmsj(String mensaje, String archivo)

@@ -2,6 +2,7 @@
 
   package compiler.scanner;
   import java.util.LinkedList;
+
 ;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -59,16 +60,16 @@ public class DecafLexer extends Lexer {
 		public void LisToken(int number, String name,String lexema){
 				token = number+" "+lexema+" "+name;
 			
-		;}
+		}
 
 
-		public LinkedList error = new LinkedList();
+	public LinkedList error = new LinkedList();
 		
-		public void emitErrorMessage(String name )
+		public void reportError(java.lang.String s)
 		{
-			error.add(name);
-		;}
-	;
+			error.add(s);
+		}
+
 
 	public DecafLexer(CharStream input) {
 		super(input);

@@ -3,7 +3,7 @@ lexer grammar DecafLexer;
 @lexer::header{
   package compiler.scanner;
   import java.util.LinkedList;
-  
+
 ;}
 
 
@@ -18,16 +18,16 @@ lexer grammar DecafLexer;
 	public void LisToken(int number, String name,String lexema){
 			token = number+" "+lexema+" "+name;
 		
-	;}
+	}
 
 
-	public LinkedList error = new LinkedList();
+public LinkedList error = new LinkedList();
 	
-	public void emitErrorMessage(String name )
+	public void reportError(java.lang.String s)
 	{
-		error.add(name);
-	;}
-;}
+		error.add(s);
+	}
+}
 
 //AUX
 fragment DIGIT		:   '0'..'9' ;

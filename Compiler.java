@@ -53,20 +53,14 @@ public static void debug (int tag, String etapa, String file){
 		Codegen condegen;
 
 
-
-
-
-
-
-
-
 	switch (tag){
 		case 0:
 			scan = new Scanner(file,etapa,false);
-			parser = new CC4Parser(scan);
+			parser = new CC4Parser(scan,false);
 			//Ast ast = new Ast(parser);
-			//Irt irt = new Irt(ast);
-
+			//semantic = new Semantic(ast);
+			//Irt irt = new Irt(semantic);
+			//condegen = new Codegen(irt);
 			break;
 		case 1:
 				if(etapa.contains("scan")){
@@ -74,23 +68,23 @@ public static void debug (int tag, String etapa, String file){
 				}
 				if(etapa.contains("parse")){
 					 scan = new Scanner(file,"fileOut.s",false);	
-					 parser = new CC4Parser(scan);
+					 parser = new CC4Parser(scan,false);
 				}
 				if(etapa.contains("ast")){
 					scan = new Scanner(file,"fileOut.s",false);	
-					parser = new CC4Parser(scan);
+					parser = new CC4Parser(scan,false);
 					ast =new Ast(parser);
 				}
 				if(etapa.contains("semantic")){
 					scan = new Scanner(file,"fileOut.s",false);	
-					parser = new CC4Parser(scan);
+					parser = new CC4Parser(scan,false);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
 
 				}
 				if(etapa.contains("irt")){
 					scan = new Scanner(file,"fileOut.s",false);	
-					parser = new CC4Parser(scan);
+					parser = new CC4Parser(scan,false);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
 					irt = new Irt(semantic);
@@ -98,7 +92,7 @@ public static void debug (int tag, String etapa, String file){
 				}
 				if(etapa.contains("codegen")){
 					scan = new Scanner(file,"fileOut.s",false);	
-					parser = new CC4Parser(scan);
+					parser = new CC4Parser(scan,false);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
 					irt = new Irt(semantic);
@@ -128,23 +122,23 @@ public static void debug (int tag, String etapa, String file){
 				}
 				if(etapaAc.contains("parse")){
 					scan = new Scanner(file,"fileOut.s",true);	
-					parser = new CC4Parser(scan);
+					parser = new CC4Parser(scan,true);
 				}
 				if(etapaAc.contains("ast")){
 					scan = new Scanner(file,"fileOut.s",true);	
-					parser = new CC4Parser(scan);
+					parser = new CC4Parser(scan,true);
 					ast =new Ast(parser);
 				}
 				if(etapaAc.contains("semantic")){
 					scan = new Scanner(file,"fileOut.s",true);	
-					parser = new CC4Parser(scan);
+					parser = new CC4Parser(scan,true);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
 
 				}
 				if(etapaAc.contains("irt")){
 					scan = new Scanner(file,"fileOut.s",true);	
-					parser = new CC4Parser(scan);
+					parser = new CC4Parser(scan,true);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
 					irt = new Irt(semantic);
@@ -152,7 +146,7 @@ public static void debug (int tag, String etapa, String file){
 				}
 				if(etapaAc.contains("codegen")){
 					scan = new Scanner(file,"fileOut.s",true);	
-					parser = new CC4Parser(scan);
+					parser = new CC4Parser(scan,true);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
 					irt = new Irt(semantic);

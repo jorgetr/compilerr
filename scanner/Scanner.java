@@ -10,8 +10,7 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
-
-
+import java.util.LinkedList;
 
 
 public class Scanner  {
@@ -24,7 +23,7 @@ public Scanner (String name, String outPutName, boolean debug) {
   String fname = name;
   String dato = "";
 
-  
+  LinkedList error=null;
  org.antlr.v4.runtime.CharStream filename=null;
 
   if (!fname.contains("."))
@@ -49,8 +48,8 @@ try{
       DecafLexer lexer = new DecafLexer(filename);
    while (lexer.nextToken().getType() != Token.EOF || lexer.error.size() > 0){
 
-      dato = lexer.token;
 
+      dato = lexer.token;
 
      
 
@@ -79,7 +78,7 @@ try{
 
 
 public void DebugScan(String texto){
-    System.out.println(texto);
+    System.out.println("Debugging Scan >"+texto);
   }
 
 
