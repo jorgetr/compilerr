@@ -1,7 +1,8 @@
 // Generated from parser/Decaf.g by ANTLR 4.3
 
 	package compiler.parser;
-	import java.util.LinkedList;
+	
+	import java.util.Stack;
 
 
 
@@ -16,19 +17,6 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * of the available methods.
  */
 public class DecafBaseListener implements DecafListener {
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBody(@NotNull Decaf.BodyContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBody(@NotNull Decaf.BodyContext ctx) { }
-
 	/**
 	 * {@inheritDoc}
 	 *
@@ -164,6 +152,19 @@ public class DecafBaseListener implements DecafListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPrograma(@NotNull Decaf.ProgramaContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrograma(@NotNull Decaf.ProgramaContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterStatement(@NotNull Decaf.StatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -197,19 +198,6 @@ public class DecafBaseListener implements DecafListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitMethod_decli(@NotNull Decaf.Method_decliContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterProgram(@NotNull Decaf.ProgramContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitProgram(@NotNull Decaf.ProgramContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

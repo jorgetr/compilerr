@@ -1,12 +1,18 @@
-make:   SCANNER   CC4PARSER   AST  SEMANTIC.CLASS IRT.CLASS CODEGEN.CLASS  programa
+make:   SCANNER   CC4PARSER   programa
 
 
 SCANNER: scanner/Scanner.java
-	javac scanner/Scanner.java
-
+	antlr scanner/DecafLexer.g
+	javac scanner/DecafLexer.java
+	
 
 CC4PARSER: parser/CC4Parser.java
-	javac parser/CC4Parser.java
+	antlr -lib scaner parser/Decaf.g
+	javac parser/Decaf.java
+		
+
+
+
 
 AST: ast/Ast.java
 	javac ast/Ast.java

@@ -63,33 +63,33 @@ public static void debug (int tag, String etapa, String file){
 	switch (tag){
 		case 0:
 			scan = new Scanner(file,etapa,false);
-			//parser = new CC4Parser(scan);
+			parser = new CC4Parser(scan);
 			//Ast ast = new Ast(parser);
 			//Irt irt = new Irt(ast);
 
 			break;
 		case 1:
 				if(etapa.contains("scan")){
-					scan = new Scanner(file,"fileOut.txt",false);
+					scan = new Scanner(file,"fileOut.s",false);
 				}
 				if(etapa.contains("parse")){
-					 scan = new Scanner(file,"fileOut.txt",false);	
+					 scan = new Scanner(file,"fileOut.s",false);	
 					 parser = new CC4Parser(scan);
 				}
 				if(etapa.contains("ast")){
-					scan = new Scanner(file,"fileOut.txt",false);	
+					scan = new Scanner(file,"fileOut.s",false);	
 					parser = new CC4Parser(scan);
 					ast =new Ast(parser);
 				}
 				if(etapa.contains("semantic")){
-					scan = new Scanner(file,"fileOut.txt",false);	
+					scan = new Scanner(file,"fileOut.s",false);	
 					parser = new CC4Parser(scan);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
 
 				}
 				if(etapa.contains("irt")){
-					scan = new Scanner(file,"fileOut.txt",false);	
+					scan = new Scanner(file,"fileOut.s",false);	
 					parser = new CC4Parser(scan);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
@@ -97,7 +97,7 @@ public static void debug (int tag, String etapa, String file){
 
 				}
 				if(etapa.contains("codegen")){
-					scan = new Scanner(file,"fileOut.txt",false);	
+					scan = new Scanner(file,"fileOut.s",false);	
 					parser = new CC4Parser(scan);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
@@ -113,32 +113,37 @@ public static void debug (int tag, String etapa, String file){
 				int aux =0;
 
 				aux = etapa.indexOf(":");
-				if (aux !=-1)
-				etapaAc=etapa.substring(0,aux);
+				if (aux !=-1){
+				etapaAc=etapa.substring(0,aux);}
+
+				if(!etapa.contains(":") && etapa.length()>0){
+					aux = 0;
+					etapaAc=etapa;
+				}
 				
 				while (aux>=0){
 				
 				if(etapaAc.contains("scan")){
-					scan = new Scanner(file,"fileOut.txt",true);
+					scan = new Scanner(file,"fileOut.s",true);
 				}
 				if(etapaAc.contains("parse")){
-					scan = new Scanner(file,"fileOut.txt",true);	
+					scan = new Scanner(file,"fileOut.s",true);	
 					parser = new CC4Parser(scan);
 				}
 				if(etapaAc.contains("ast")){
-					scan = new Scanner(file,"fileOut.txt",true);	
+					scan = new Scanner(file,"fileOut.s",true);	
 					parser = new CC4Parser(scan);
 					ast =new Ast(parser);
 				}
 				if(etapaAc.contains("semantic")){
-					scan = new Scanner(file,"fileOut.txt",true);	
+					scan = new Scanner(file,"fileOut.s",true);	
 					parser = new CC4Parser(scan);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
 
 				}
 				if(etapaAc.contains("irt")){
-					scan = new Scanner(file,"fileOut.txt",true);	
+					scan = new Scanner(file,"fileOut.s",true);	
 					parser = new CC4Parser(scan);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
@@ -146,7 +151,7 @@ public static void debug (int tag, String etapa, String file){
 
 				}
 				if(etapaAc.contains("codegen")){
-					scan = new Scanner(file,"fileOut.txt",true);	
+					scan = new Scanner(file,"fileOut.s",true);	
 					parser = new CC4Parser(scan);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
@@ -200,11 +205,9 @@ public static void main(String[] args) {
 		break;
 
 		case "-target":
-		System.out.println("1");
+		
 		if (args[2].contains(".")){
-			System.out.println("2");
 			if (args[1].equals("scan")||args[1].equals("parse")||args[1].equals("ast")||args[1].equals("semantic")||args[1].equals("irt")||args[1].equals("codegen")){
-				System.out.println("3");
 				debug(1,args[1],args[2]);
 			}
 		}
@@ -219,9 +222,13 @@ public static void main(String[] args) {
 
 		case "-debug":
 		
-		if (args[2].contains("."))
-			if (args[1].equals("scna")||args[1].equals("parse")||args[1].equals("ast")||args[1].equals("semantic")||args[1].equals("irt")||args[1].equals("codegen"))
+		if (args[2].contains(".")){
+		
+			if (args[1].contains("scan")||args[1].contains("parse")||args[1].contains("ast")||args[1].contains("semantic")||args[1].contains("irt")||args[1].contains("codegen")){
+		
 				debug(2,args[1],args[2]);
+			}	
+		}
 		break;
 
 		case "-h":

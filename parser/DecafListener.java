@@ -1,7 +1,8 @@
 // Generated from parser/Decaf.g by ANTLR 4.3
 
 	package compiler.parser;
-	import java.util.LinkedList;
+	
+	import java.util.Stack;
 
 
 import org.antlr.v4.runtime.misc.NotNull;
@@ -12,17 +13,6 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  * {@link Decaf}.
  */
 public interface DecafListener extends ParseTreeListener {
-	/**
-	 * Enter a parse tree produced by {@link Decaf#body}.
-	 * @param ctx the parse tree
-	 */
-	void enterBody(@NotNull Decaf.BodyContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link Decaf#body}.
-	 * @param ctx the parse tree
-	 */
-	void exitBody(@NotNull Decaf.BodyContext ctx);
-
 	/**
 	 * Enter a parse tree produced by {@link Decaf#asig_op}.
 	 * @param ctx the parse tree
@@ -134,6 +124,17 @@ public interface DecafListener extends ParseTreeListener {
 	void exitRel_op(@NotNull Decaf.Rel_opContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link Decaf#programa}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrograma(@NotNull Decaf.ProgramaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Decaf#programa}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrograma(@NotNull Decaf.ProgramaContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link Decaf#statement}.
 	 * @param ctx the parse tree
 	 */
@@ -165,17 +166,6 @@ public interface DecafListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMethod_decli(@NotNull Decaf.Method_decliContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link Decaf#program}.
-	 * @param ctx the parse tree
-	 */
-	void enterProgram(@NotNull Decaf.ProgramContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link Decaf#program}.
-	 * @param ctx the parse tree
-	 */
-	void exitProgram(@NotNull Decaf.ProgramContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link Decaf#eq_op}.
