@@ -1,7 +1,0 @@
-class program {
-  void main() {
-    int char;
-    char = 'a';
-    int a = 2 + 3;
-    callout("printf", "%c\n", char);
-  }

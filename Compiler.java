@@ -63,7 +63,7 @@ public static void debug (int tag, String etapa, String file){
 	switch (tag){
 		case 0:
 			scan = new Scanner(file,etapa,false);
-			parser = new CC4Parser(scan);
+			//parser = new CC4Parser(scan);
 			//Ast ast = new Ast(parser);
 			//Irt irt = new Irt(ast);
 
@@ -200,11 +200,14 @@ public static void main(String[] args) {
 		break;
 
 		case "-target":
-
-		if (args[2].contains("."))
-			if (args[1].equals("scna")||args[1].equals("parse")||args[1].equals("ast")||args[1].equals("semantic")||args[1].equals("irt")||args[1].equals("codegen"))
+		System.out.println("1");
+		if (args[2].contains(".")){
+			System.out.println("2");
+			if (args[1].equals("scan")||args[1].equals("parse")||args[1].equals("ast")||args[1].equals("semantic")||args[1].equals("irt")||args[1].equals("codegen")){
+				System.out.println("3");
 				debug(1,args[1],args[2]);
-		
+			}
+		}
 		break;
 
 

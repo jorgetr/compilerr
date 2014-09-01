@@ -15,18 +15,18 @@ import org.antlr.v4.runtime.misc.*;
 
 
 public class Scanner  {
-	public String nameFile;
-	public File archivo;
+  public String nameFile;
+  public File archivo;
 
 public Scanner (String name, String outPutName, boolean debug) {
 
-	String fname = name;
+  String fname = name;
   String token;
   String dato = "";
   
  org.antlr.v4.runtime.CharStream filename=null;
-	if (!fname.contains("."))
-	fname=fname+".txt";
+  if (!fname.contains("."))
+  fname=fname+".txt";
   
 try{
   filename =new ANTLRFileStream(fname);
@@ -46,7 +46,7 @@ try{
       if(!dato.equals("")){
         
           if (debug)
-            DebugScan(dato):
+            DebugScan(dato);
 
         ptrmsj(dato, outPutName);
       
@@ -102,7 +102,7 @@ if (!archivo.contains("."))
 
 
 public String elArchivo(){
-	return nameFile;
+  return nameFile;
 }
 
 }
