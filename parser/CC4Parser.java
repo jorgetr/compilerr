@@ -25,8 +25,10 @@ public CC4Parser (Scanner token,boolean debug) {
 	String output = token.nameFileOutput;
 	
 	Decaf parser=null;
+
 	Stack treeParse;
-	ptrmsj("stage: parsing", output);
+	Stack errorParse;
+	ptrmsj("\nstage: parsing", output);
 		try{
 			parser = new Decaf(new CommonTokenStream(new DecafLexer(new ANTLRFileStream(input))));
 		}catch(Exception e){
@@ -39,14 +41,27 @@ public CC4Parser (Scanner token,boolean debug) {
 		try{
 			parser.programa();
 			treeParse = parser.treeParse;
+			errorParse= parser.stackErrorParse;
 			
+
+			while(!errorParse.isEmpty())
+			{
+
+				String aux =(String)errorParse.pop();
+			ptrmsj(aux, output);
+		
+
+			}
+
+
+
 			while(!treeParse.isEmpty())
 			{
 
 				String aux =(String)treeParse.pop();
 			ptrmsj(aux, output);
 			  if (debug)
-            DebugParse(dato);
+            DebugParse(aux);
 
 			}
 
@@ -59,6 +74,7 @@ public CC4Parser (Scanner token,boolean debug) {
 
   }
 public void DebugParse(String texto){
+	ptrmsj(" Debugging Scan", outPutName);
     System.out.println("Debugging Parser >"+texto);
   }
 

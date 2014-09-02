@@ -121,24 +121,24 @@ public static void debug (int tag, String etapa, String file){
 					scan = new Scanner(file,"fileOut.s",true);
 				}
 				if(etapaAc.contains("parse")){
-					scan = new Scanner(file,"fileOut.s",true);	
+					scan = new Scanner(file,"fileOut.s",false);	
 					parser = new CC4Parser(scan,true);
 				}
 				if(etapaAc.contains("ast")){
-					scan = new Scanner(file,"fileOut.s",true);	
-					parser = new CC4Parser(scan,true);
+					scan = new Scanner(file,"fileOut.s",false);	
+					parser = new CC4Parser(scan,false);
 					ast =new Ast(parser);
 				}
 				if(etapaAc.contains("semantic")){
-					scan = new Scanner(file,"fileOut.s",true);	
-					parser = new CC4Parser(scan,true);
+					scan = new Scanner(file,"fileOut.s",false);	
+					parser = new CC4Parser(scan,false);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
 
 				}
 				if(etapaAc.contains("irt")){
-					scan = new Scanner(file,"fileOut.s",true);	
-					parser = new CC4Parser(scan,true);
+					scan = new Scanner(file,"fileOut.s",false);	
+					parser = new CC4Parser(scan,false);
 					ast =new Ast(parser);
 					semantic = new Semantic(ast);
 					irt = new Irt(semantic);

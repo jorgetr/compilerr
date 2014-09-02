@@ -22,21 +22,21 @@ public class Decaf extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		OPENBRACE=25, CLOSEPAREN=22, CLASS=33, XOR=13, COMENT=47, ELSE=43, CHARLIT=28, 
-		BOOLEANLITERAL=29, OPENBRACKET=23, FOR=38, SUB=2, INT=34, SEMICOLON=20, 
-		NOT=12, MULT=3, MINUSASSIGN=18, INTLITERAL=31, AND=10, COMA=19, BREAK=40, 
-		IF=37, NOTEQUAL=15, CLOSEBRACKET=24, BOOLEAN=35, HEXLIT=30, GREATEQ=9, 
-		LESSEQ=8, CONTINUE=41, CLOSEBRACE=26, STRINGLITERAL=27, PORC=5, EQUAL=14, 
-		OR=11, RETURN=39, ASSIGN=16, PROGRAM=44, GREATTHAT=7, VAR=45, VOID=36, 
-		ESPACIOS=46, DECIMALIT=32, DIV=4, PLUSASSIGN=17, OPENAREN=21, CALLOUT=42, 
-		LESSTHAT=6, ADD=1;
+		OPENBRACE=25, CLOSEPAREN=22, CLASS=32, XOR=13, COMENT=46, ELSE=42, CHARLIT=28, 
+		BOOLEANLITERAL=29, OPENBRACKET=23, FOR=37, SUB=2, INT=33, SEMICOLON=20, 
+		NOT=12, MULT=3, MINUSASSIGN=18, INTLITERAL=31, AND=10, COMA=19, BREAK=39, 
+		IF=36, NOTEQUAL=15, CLOSEBRACKET=24, BOOLEAN=34, HEXLIT=30, GREATEQ=9, 
+		LESSEQ=8, CONTINUE=40, CLOSEBRACE=26, STRINGLITERAL=27, PORC=5, EQUAL=14, 
+		OR=11, RETURN=38, ASSIGN=16, PROGRAM=43, GREATTHAT=7, VAR=44, VOID=35, 
+		ESPACIOS=45, DIV=4, PLUSASSIGN=17, OPENAREN=21, CALLOUT=41, LESSTHAT=6, 
+		ADD=1;
 	public static final String[] tokenNames = {
 		"<INVALID>", "'+'", "'-'", "'*'", "'/'", "'%'", "'<'", "'>'", "'<='", 
 		"'>='", "'&&'", "'||'", "'!'", "'^'", "'=='", "'!='", "'='", "'+='", "'-='", 
 		"','", "';'", "'('", "')'", "'['", "']'", "'{'", "'}'", "STRINGLITERAL", 
-		"CHARLIT", "BOOLEANLITERAL", "HEXLIT", "INTLITERAL", "DECIMALIT", "'class'", 
-		"INT", "BOOLEAN", "VOID", "IF", "FOR", "RETURN", "BREAK", "CONTINUE", 
-		"CALLOUT", "ELSE", "PROGRAM", "VAR", "ESPACIOS", "COMENT"
+		"CHARLIT", "BOOLEANLITERAL", "HEXLIT", "INTLITERAL", "'class'", "INT", 
+		"BOOLEAN", "VOID", "IF", "FOR", "RETURN", "BREAK", "CONTINUE", "CALLOUT", 
+		"ELSE", "PROGRAM", "VAR", "ESPACIOS", "COMENT"
 	};
 	public static final int
 		RULE_programa = 0, RULE_field_decli = 1, RULE_method_decli = 2, RULE_block = 3, 
@@ -67,19 +67,26 @@ public class Decaf extends Parser {
 
 
 	public  Stack treeParse = new Stack();
-		
+	public  Stack stackErrorParse = new Stack();
 	public String lineaParse = "";
 		
 		
-		public void Tree(String lexema){
-				lineaParse = lexema;
+		public void Tree(int line,String lexema){
+				lineaParse =line+" "+ lexema;
 				treeParse.push(lineaParse);
 		;}
 		
-		public void emitErrorMessage(String msg)
-		{
-			
-		}
+	@Override
+	public void notifyErrorListeners(@NotNull
+	                        Token offendingToken,
+	                        @NotNull
+	                        String msg,
+	                        @Nullable
+	                        RecognitionException e){
+				String lineaError = "Error Line:"+offendingToken.getLine()+":"+msg;
+				stackErrorParse.push(lineaError);
+
+	}
 
 	public Decaf(TokenStream input) {
 		super(input);
@@ -156,7 +163,7 @@ public class Decaf extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(53); match(CLOSEBRACE);
-			Tree("programa");
+			Tree(getCurrentToken().getLine(),"programa");
 			}
 		}
 		catch (RecognitionException re) {
@@ -300,7 +307,7 @@ public class Decaf extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(82); match(SEMICOLON);
-			Tree("field_decli");
+			Tree(getCurrentToken().getLine(),"field_decli");
 			}
 		}
 		catch (RecognitionException re) {
@@ -449,7 +456,7 @@ public class Decaf extends Parser {
 			}
 			setState(118); match(CLOSEPAREN);
 			setState(119); block();
-			Tree("method_decli");
+			Tree(getCurrentToken().getLine(),"method_decli");
 			}
 		}
 		catch (RecognitionException re) {
@@ -527,7 +534,7 @@ public class Decaf extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(135); match(CLOSEBRACE);
-			Tree("block");
+			Tree(getCurrentToken().getLine(),"block");
 			}
 		}
 		catch (RecognitionException re) {
@@ -621,7 +628,7 @@ public class Decaf extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(151); match(SEMICOLON);
-			Tree("var_decl");
+			Tree(getCurrentToken().getLine(),"var_decl");
 			}
 		}
 		catch (RecognitionException re) {
@@ -665,7 +672,7 @@ public class Decaf extends Parser {
 			_errHandler.recoverInline(this);
 			}
 			consume();
-			Tree("type");
+			Tree(getCurrentToken().getLine(),"type");
 			}
 		}
 		catch (RecognitionException re) {
@@ -855,7 +862,7 @@ public class Decaf extends Parser {
 				}
 				break;
 			}
-			Tree("statement");
+			Tree(getCurrentToken().getLine(),"statement");
 			}
 		}
 		catch (RecognitionException re) {
@@ -909,7 +916,7 @@ public class Decaf extends Parser {
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(203); match(MINUSASSIGN);
-				Tree("asig_op");
+				Tree(getCurrentToken().getLine(),"asig_op");
 				}
 				break;
 			default:
@@ -1045,7 +1052,7 @@ public class Decaf extends Parser {
 					_errHandler.sync(this);
 					_alt = getInterpreter().adaptivePredict(_input,25,_ctx);
 				} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
-				Tree("method_call");
+				Tree(getCurrentToken().getLine(),"method_call");
 				}
 				break;
 			default:
@@ -1086,7 +1093,7 @@ public class Decaf extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(236); match(VAR);
-			Tree("method_name");
+			Tree(getCurrentToken().getLine(),"method_name");
 			}
 		}
 		catch (RecognitionException re) {
@@ -1141,7 +1148,7 @@ public class Decaf extends Parser {
 				setState(241); match(OPENBRACKET);
 				setState(242); expr(0);
 				setState(243); match(CLOSEBRACKET);
-				Tree("location");
+				Tree(getCurrentToken().getLine(),"location");
 				}
 				break;
 			}
@@ -1248,7 +1255,7 @@ public class Decaf extends Parser {
 				setState(256); match(OPENAREN);
 				setState(257); expr(0);
 				setState(258); match(CLOSEPAREN);
-				Tree("expr");
+				Tree(getCurrentToken().getLine(),"expr");
 				}
 				break;
 			}
@@ -1330,7 +1337,7 @@ public class Decaf extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(273); match(STRINGLITERAL);
-				Tree("callout_args");
+				Tree(getCurrentToken().getLine(),"callout_args");
 				}
 				break;
 			default:
@@ -1411,7 +1418,7 @@ public class Decaf extends Parser {
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(280); cond_op();
-				Tree("bin_op");
+				Tree(getCurrentToken().getLine(),"bin_op");
 				}
 				break;
 			default:
@@ -1476,7 +1483,7 @@ public class Decaf extends Parser {
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(288); match(DIV);
-				Tree("arith_op");
+				Tree(getCurrentToken().getLine(),"arith_op");
 				}
 				break;
 			default:
@@ -1541,7 +1548,7 @@ public class Decaf extends Parser {
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(295); match(GREATEQ);
-				Tree("rel_op");
+				Tree(getCurrentToken().getLine(),"rel_op");
 				}
 				break;
 			default:
@@ -1592,7 +1599,7 @@ public class Decaf extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(300); match(NOTEQUAL);
-				Tree("eq_op");
+				Tree(getCurrentToken().getLine(),"eq_op");
 				}
 				break;
 			default:
@@ -1643,7 +1650,7 @@ public class Decaf extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(305); match(OR);
-				Tree("cond_op");
+				Tree(getCurrentToken().getLine(),"cond_op");
 				}
 				break;
 			default:
@@ -1701,7 +1708,7 @@ public class Decaf extends Parser {
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(311); match(BOOLEANLITERAL);
-				Tree("literal");
+				Tree(getCurrentToken().getLine(),"literal");
 				}
 				break;
 			default:
@@ -1733,7 +1740,7 @@ public class Decaf extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\61\u013e\4\2\t\2"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\60\u013e\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\3\2\3\2\3\2\3\2\7\2-\n\2\f\2\16\2\60\13\2\3\2\7\2"+
@@ -1757,23 +1764,23 @@ public class Decaf extends Parser {
 		"\5\20\u0125\n\20\3\21\3\21\3\21\3\21\3\21\5\21\u012c\n\21\3\22\3\22\3"+
 		"\22\5\22\u0131\n\22\3\23\3\23\3\23\5\23\u0136\n\23\3\24\3\24\3\24\3\24"+
 		"\5\24\u013c\n\24\3\24\2\3\30\25\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36"+
-		" \"$&\2\3\3\2$%\u0161\2(\3\2\2\2\4:\3\2\2\2\6Y\3\2\2\2\b|\3\2\2\2\n\u008c"+
+		" \"$&\2\3\3\2#$\u0161\2(\3\2\2\2\4:\3\2\2\2\6Y\3\2\2\2\b|\3\2\2\2\n\u008c"+
 		"\3\2\2\2\f\u009c\3\2\2\2\16\u00c7\3\2\2\2\20\u00cf\3\2\2\2\22\u00ec\3"+
 		"\2\2\2\24\u00ee\3\2\2\2\26\u00f8\3\2\2\2\30\u0107\3\2\2\2\32\u0115\3\2"+
 		"\2\2\34\u011d\3\2\2\2\36\u0124\3\2\2\2 \u012b\3\2\2\2\"\u0130\3\2\2\2"+
-		"$\u0135\3\2\2\2&\u013b\3\2\2\2()\7#\2\2)*\7.\2\2*.\7\33\2\2+-\5\4\3\2"+
+		"$\u0135\3\2\2\2&\u013b\3\2\2\2()\7\"\2\2)*\7-\2\2*.\7\33\2\2+-\5\4\3\2"+
 		",+\3\2\2\2-\60\3\2\2\2.,\3\2\2\2./\3\2\2\2/\64\3\2\2\2\60.\3\2\2\2\61"+
 		"\63\5\6\4\2\62\61\3\2\2\2\63\66\3\2\2\2\64\62\3\2\2\2\64\65\3\2\2\2\65"+
 		"\67\3\2\2\2\66\64\3\2\2\2\678\7\34\2\289\b\2\1\29\3\3\2\2\2:Q\5\f\7\2"+
-		";A\7/\2\2<=\7/\2\2=>\7\31\2\2>?\7!\2\2?A\7\32\2\2@;\3\2\2\2@<\3\2\2\2"+
-		"AC\3\2\2\2B@\3\2\2\2CD\3\2\2\2DB\3\2\2\2DE\3\2\2\2EP\3\2\2\2FN\7/\2\2"+
-		"GH\7/\2\2HI\7\31\2\2IJ\7!\2\2JK\7\32\2\2KL\3\2\2\2LN\7\25\2\2MF\3\2\2"+
+		";A\7.\2\2<=\7.\2\2=>\7\31\2\2>?\7!\2\2?A\7\32\2\2@;\3\2\2\2@<\3\2\2\2"+
+		"AC\3\2\2\2B@\3\2\2\2CD\3\2\2\2DB\3\2\2\2DE\3\2\2\2EP\3\2\2\2FN\7.\2\2"+
+		"GH\7.\2\2HI\7\31\2\2IJ\7!\2\2JK\7\32\2\2KL\3\2\2\2LN\7\25\2\2MF\3\2\2"+
 		"\2MG\3\2\2\2NP\3\2\2\2OB\3\2\2\2OM\3\2\2\2PS\3\2\2\2QO\3\2\2\2QR\3\2\2"+
-		"\2RT\3\2\2\2SQ\3\2\2\2TU\7\26\2\2UV\b\3\1\2V\5\3\2\2\2WZ\5\f\7\2XZ\7&"+
-		"\2\2YW\3\2\2\2YX\3\2\2\2Z[\3\2\2\2[\\\7/\2\2\\u\7\27\2\2]^\5\f\7\2^_\7"+
-		"/\2\2_a\3\2\2\2`]\3\2\2\2ab\3\2\2\2b`\3\2\2\2bc\3\2\2\2cd\3\2\2\2de\7"+
+		"\2RT\3\2\2\2SQ\3\2\2\2TU\7\26\2\2UV\b\3\1\2V\5\3\2\2\2WZ\5\f\7\2XZ\7%"+
+		"\2\2YW\3\2\2\2YX\3\2\2\2Z[\3\2\2\2[\\\7.\2\2\\u\7\27\2\2]^\5\f\7\2^_\7"+
+		".\2\2_a\3\2\2\2`]\3\2\2\2ab\3\2\2\2b`\3\2\2\2bc\3\2\2\2cd\3\2\2\2de\7"+
 		"\25\2\2eg\3\2\2\2f`\3\2\2\2gh\3\2\2\2hf\3\2\2\2hi\3\2\2\2it\3\2\2\2jk"+
-		"\5\f\7\2kl\7/\2\2ln\3\2\2\2mj\3\2\2\2no\3\2\2\2om\3\2\2\2op\3\2\2\2pq"+
+		"\5\f\7\2kl\7.\2\2ln\3\2\2\2mj\3\2\2\2no\3\2\2\2om\3\2\2\2op\3\2\2\2pq"+
 		"\3\2\2\2qr\7\25\2\2rt\3\2\2\2sf\3\2\2\2sm\3\2\2\2tw\3\2\2\2us\3\2\2\2"+
 		"uv\3\2\2\2vx\3\2\2\2wu\3\2\2\2xy\7\30\2\2yz\5\b\5\2z{\b\4\1\2{\7\3\2\2"+
 		"\2|\u0080\7\33\2\2}\177\5\n\6\2~}\3\2\2\2\177\u0082\3\2\2\2\u0080~\3\2"+
@@ -1781,22 +1788,22 @@ public class Decaf extends Parser {
 		"\u0085\5\16\b\2\u0084\u0083\3\2\2\2\u0085\u0088\3\2\2\2\u0086\u0084\3"+
 		"\2\2\2\u0086\u0087\3\2\2\2\u0087\u0089\3\2\2\2\u0088\u0086\3\2\2\2\u0089"+
 		"\u008a\7\34\2\2\u008a\u008b\b\5\1\2\u008b\t\3\2\2\2\u008c\u0096\5\f\7"+
-		"\2\u008d\u008f\7/\2\2\u008e\u008d\3\2\2\2\u008f\u0090\3\2\2\2\u0090\u008e"+
-		"\3\2\2\2\u0090\u0091\3\2\2\2\u0091\u0095\3\2\2\2\u0092\u0093\7/\2\2\u0093"+
+		"\2\u008d\u008f\7.\2\2\u008e\u008d\3\2\2\2\u008f\u0090\3\2\2\2\u0090\u008e"+
+		"\3\2\2\2\u0090\u0091\3\2\2\2\u0091\u0095\3\2\2\2\u0092\u0093\7.\2\2\u0093"+
 		"\u0095\7\25\2\2\u0094\u008e\3\2\2\2\u0094\u0092\3\2\2\2\u0095\u0098\3"+
 		"\2\2\2\u0096\u0094\3\2\2\2\u0096\u0097\3\2\2\2\u0097\u0099\3\2\2\2\u0098"+
 		"\u0096\3\2\2\2\u0099\u009a\7\26\2\2\u009a\u009b\b\6\1\2\u009b\13\3\2\2"+
 		"\2\u009c\u009d\t\2\2\2\u009d\u009e\b\7\1\2\u009e\r\3\2\2\2\u009f\u00a0"+
 		"\5\26\f\2\u00a0\u00a1\5\20\t\2\u00a1\u00a2\5\30\r\2\u00a2\u00a3\7\26\2"+
 		"\2\u00a3\u00c8\3\2\2\2\u00a4\u00a5\5\22\n\2\u00a5\u00a6\7\26\2\2\u00a6"+
-		"\u00c8\3\2\2\2\u00a7\u00a8\7\'\2\2\u00a8\u00a9\7\27\2\2\u00a9\u00aa\5"+
-		"\30\r\2\u00aa\u00ab\7\30\2\2\u00ab\u00ae\5\b\5\2\u00ac\u00ad\7-\2\2\u00ad"+
+		"\u00c8\3\2\2\2\u00a7\u00a8\7&\2\2\u00a8\u00a9\7\27\2\2\u00a9\u00aa\5\30"+
+		"\r\2\u00aa\u00ab\7\30\2\2\u00ab\u00ae\5\b\5\2\u00ac\u00ad\7,\2\2\u00ad"+
 		"\u00af\5\b\5\2\u00ae\u00ac\3\2\2\2\u00af\u00b0\3\2\2\2\u00b0\u00ae\3\2"+
-		"\2\2\u00b0\u00b1\3\2\2\2\u00b1\u00c8\3\2\2\2\u00b2\u00b3\7(\2\2\u00b3"+
-		"\u00b4\7/\2\2\u00b4\u00b5\7\22\2\2\u00b5\u00b6\5\30\r\2\u00b6\u00b7\7"+
+		"\2\2\u00b0\u00b1\3\2\2\2\u00b1\u00c8\3\2\2\2\u00b2\u00b3\7\'\2\2\u00b3"+
+		"\u00b4\7.\2\2\u00b4\u00b5\7\22\2\2\u00b5\u00b6\5\30\r\2\u00b6\u00b7\7"+
 		"\25\2\2\u00b7\u00b8\5\30\r\2\u00b8\u00b9\5\b\5\2\u00b9\u00c8\3\2\2\2\u00ba"+
-		"\u00bb\7*\2\2\u00bb\u00c8\7\26\2\2\u00bc\u00bd\7+\2\2\u00bd\u00c8\7\26"+
-		"\2\2\u00be\u00c8\5\b\5\2\u00bf\u00c1\7)\2\2\u00c0\u00c2\5\30\r\2\u00c1"+
+		"\u00bb\7)\2\2\u00bb\u00c8\7\26\2\2\u00bc\u00bd\7*\2\2\u00bd\u00c8\7\26"+
+		"\2\2\u00be\u00c8\5\b\5\2\u00bf\u00c1\7(\2\2\u00c0\u00c2\5\30\r\2\u00c1"+
 		"\u00c0\3\2\2\2\u00c2\u00c3\3\2\2\2\u00c3\u00c1\3\2\2\2\u00c3\u00c4\3\2"+
 		"\2\2\u00c4\u00c5\3\2\2\2\u00c5\u00c6\7\26\2\2\u00c6\u00c8\3\2\2\2\u00c7"+
 		"\u009f\3\2\2\2\u00c7\u00a4\3\2\2\2\u00c7\u00a7\3\2\2\2\u00c7\u00b2\3\2"+
@@ -1807,15 +1814,15 @@ public class Decaf extends Parser {
 		"\2\2\u00d0\21\3\2\2\2\u00d1\u00d2\5\24\13\2\u00d2\u00d7\7\27\2\2\u00d3"+
 		"\u00d8\5\30\r\2\u00d4\u00d5\5\30\r\2\u00d5\u00d6\7\25\2\2\u00d6\u00d8"+
 		"\3\2\2\2\u00d7\u00d3\3\2\2\2\u00d7\u00d4\3\2\2\2\u00d8\u00d9\3\2\2\2\u00d9"+
-		"\u00da\7\30\2\2\u00da\u00ed\3\2\2\2\u00db\u00dc\7,\2\2\u00dc\u00e7\7\35"+
+		"\u00da\7\30\2\2\u00da\u00ed\3\2\2\2\u00db\u00dc\7+\2\2\u00dc\u00e7\7\35"+
 		"\2\2\u00dd\u00e4\7\25\2\2\u00de\u00e3\5\32\16\2\u00df\u00e0\5\32\16\2"+
 		"\u00e0\u00e1\7\25\2\2\u00e1\u00e3\3\2\2\2\u00e2\u00de\3\2\2\2\u00e2\u00df"+
 		"\3\2\2\2\u00e3\u00e6\3\2\2\2\u00e4\u00e2\3\2\2\2\u00e4\u00e5\3\2\2\2\u00e5"+
 		"\u00e8\3\2\2\2\u00e6\u00e4\3\2\2\2\u00e7\u00dd\3\2\2\2\u00e8\u00e9\3\2"+
 		"\2\2\u00e9\u00e7\3\2\2\2\u00e9\u00ea\3\2\2\2\u00ea\u00eb\3\2\2\2\u00eb"+
 		"\u00ed\b\n\1\2\u00ec\u00d1\3\2\2\2\u00ec\u00db\3\2\2\2\u00ed\23\3\2\2"+
-		"\2\u00ee\u00ef\7/\2\2\u00ef\u00f0\b\13\1\2\u00f0\25\3\2\2\2\u00f1\u00f9"+
-		"\7/\2\2\u00f2\u00f3\7/\2\2\u00f3\u00f4\7\31\2\2\u00f4\u00f5\5\30\r\2\u00f5"+
+		"\2\u00ee\u00ef\7.\2\2\u00ef\u00f0\b\13\1\2\u00f0\25\3\2\2\2\u00f1\u00f9"+
+		"\7.\2\2\u00f2\u00f3\7.\2\2\u00f3\u00f4\7\31\2\2\u00f4\u00f5\5\30\r\2\u00f5"+
 		"\u00f6\7\32\2\2\u00f6\u00f7\b\f\1\2\u00f7\u00f9\3\2\2\2\u00f8\u00f1\3"+
 		"\2\2\2\u00f8\u00f2\3\2\2\2\u00f9\27\3\2\2\2\u00fa\u00fb\b\r\1\2\u00fb"+
 		"\u00fc\7\4\2\2\u00fc\u0108\5\30\r\5\u00fd\u00fe\7\16\2\2\u00fe\u0108\5"+

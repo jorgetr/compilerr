@@ -12,12 +12,13 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.*;
 import java.util.LinkedList;
 
+import java.util.Stack;
 
 public class Scanner  {
   public String nameFileInput;
   public String nameFileOutput;
   public File archivo;
-
+  Stack errorStack;
 public Scanner (String name, String outPutName, boolean debug) {
 
   String fname = name;
@@ -46,10 +47,25 @@ try{
 
   try{
       DecafLexer lexer = new DecafLexer(filename);
-   while (lexer.nextToken().getType() != Token.EOF || lexer.error.size() > 0){
+   while (lexer.nextToken().getType() != Token.EOF || lexer.errorStack.size() > 0){
 
 
       dato = lexer.token;
+      errorStack = lexer.errorStack;
+
+
+      
+
+  while(!errorStack.isEmpty())
+      {
+
+
+        String aux ="<REPORT:  "+(String)errorStack.pop() + "/>";
+      ptrmsj(aux, outPutName);
+  
+
+      }
+
 
      
 
@@ -78,6 +94,8 @@ try{
 
 
 public void DebugScan(String texto){
+ 
+   ptrmsj(" Debugging Scan", outPutName);
     System.out.println("Debugging Scan >"+texto);
   }
 

@@ -1,46 +1,38 @@
-make:   SCANNER   CC4PARSER   programa
+make:  scanner/DecafLexer.java scanner/DecafLexer.class  scanner/Scanner.class parser/Decaf.java parser/Decaf.class parser/CC4Parser.class    Compiler.class
 
-
-SCANNER: scanner/Scanner.java
-	antlr scanner/DecafLexer.g
+Compiler.class: Compiler.java
+	javac Compiler.java
+	
+parser/CC4Parser.class: parser/CC4Parser.java
+	javac parser/CC4Parser.java
+	
+parser/Decaf.class: parser/Decaf.java
+	javac parser/Decaf.java
+	
+parser/Decaf.java: parser/Decaf.g
+	java org.antlr.v4.Tool -lib scanner/ parser/Decaf.g
+	
+	
+	
+scanner/Scanner.class: scanner/Scanner.java
+	javac scanner/Scanner.java
+	
+scanner/DecafLexer.class: scanner/DecafLexer.java
 	javac scanner/DecafLexer.java
 	
-
-CC4PARSER: parser/CC4Parser.java
-	antlr -lib scaner parser/Decaf.g
-	javac parser/Decaf.java
-		
-
-
-
-
-AST: ast/Ast.java
-	javac ast/Ast.java
-
-
-SEMANTIC.CLASS: semantic/Semantic.java
-	javac semantic/Semantic.java
-
-IRT.CLASS: irt/Irt.java
-	javac irt/Irt.java
-
-CODEGEN.CLASS: codegen/Codegen.java
-	javac codegen/Codegen.java
-
-
-
-programa:
-	javac Compiler.java
-
-
-clean: 
+scanner/DecafLexer.java: scanner/DecafLexer.g
+	java org.antlr.v4.Tool scanner/DecafLexer.g
 	
-	rm scanner/*.class
-	rm parser/*.class
-	rm parser/GramaticaParser.java
-	rm ast/*.class
-	rm semantic/*.class
-	rm irt/*.class
-	rm codegen/*.class
 	
-#	clear
+
+	
+clean:
+	del *~ *.class
+	del lib/*.class
+	del opt/*.class
+	del codegen/*.class
+	del irt/*.class
+	del semantic/*.class
+	del ast/*.class
+	del scanner/DecafLexer.java scanner/*.class scanner/*~ scanner/*.tokens
+	del parser/Decaf.java parser/*.class parser/*~ parser/*.tokens

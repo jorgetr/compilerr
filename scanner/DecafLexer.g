@@ -3,7 +3,7 @@ lexer grammar DecafLexer;
 @lexer::header{
   package compiler.scanner;
   import java.util.LinkedList;
-
+	import java.util.Stack;
 ;}
 
 
@@ -21,12 +21,16 @@ lexer grammar DecafLexer;
 	}
 
 
-public LinkedList error = new LinkedList();
+public  Stack errorStack = new Stack();
 	
-	public void reportError(java.lang.String s)
-	{
-		error.add(s);
-	}
+
+@Override
+public String getErrorDisplay(String s){
+			String errorLine = "Error Line:"+getLine()+":"+getCharPositionInLine()+"Symbol: "+s;
+			errorStack.push(errorLine);
+return s;	
+}
+
 }
 
 //AUX
@@ -73,7 +77,6 @@ CHARLIT 	  :	 '\''(ESC|~('\''|'\\'|'"'|'\n'|'\t'))'\''   {LisToken(getLine(),get
 BOOLEANLITERAL:  ('true'|'false') 							{LisToken(getLine(),getText(),"BOOLEANLITERAL");};
 HEXLIT 		  :	 '0'('x'|'X')(DIGIT|HEX)(DIGIT|HEX)* 		{LisToken(getLine(),getText(),"HEXLIT");};
 INTLITERAL 	  :  (DIGIT+|'0'('x'|'X')HEX+) 					{LisToken(getLine(),getText(),"INTLITERAL");};
-DECIMALIT 	  :  (DIGIT)(DIGIT)*        			    	{LisToken(getLine(),getText(),"DECIMALIT");};
 
 //RESERVADAS
 

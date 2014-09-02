@@ -8,11 +8,9 @@ CHARLIT=28
 BOOLEANLITERAL=29
 OPENBRACKET=23
 FOR=37
-SUB=2
 INT=33
 SEMICOLON=20
 NOT=12
-MULT=3
 MINUSASSIGN=18
 INTLITERAL=31
 AND=10
@@ -43,7 +41,6 @@ PLUSASSIGN=17
 OPENAREN=21
 CALLOUT=41
 LESSTHAT=6
-ADD=1
 '!'=12
 'class'=32
 '>='=9
@@ -54,7 +51,6 @@ ADD=1
 '&&'=10
 ';'=20
 '='=16
-'+'=1
 ')'=22
 '^'=13
 '%'=5
@@ -65,8 +61,6 @@ ADD=1
 '!='=15
 '<'=6
 '('=21
-'*'=3
-'-'=2
 '['=23
 ','=19
 '-='=18
