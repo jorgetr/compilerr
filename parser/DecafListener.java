@@ -1,9 +1,7 @@
 // Generated from parser/Decaf.g by ANTLR 4.3
 
 	package compiler.parser;
-	
 	import java.util.Stack;
-
 
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;

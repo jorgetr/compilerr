@@ -1,6 +1,41 @@
 class Program {
- int main(){
-  int x;
-  x = "5"; 
- $ 
+	int factorial(){
+		if(n == 1 || n == 0 )
+		{
+			return 1;
+		}else
+		{
+			for a=1,c+2 
+			{
+				return ((-((1))))+1*3-6;
+				for a=1,c[foo(0+1)]+2 
+				{
+					foo(callout ("hola", 3+a, (2*b), 4*c));
+					break;
+						if (n==2) 
+						{
+							return 0x5;
+							if (!n==5)
+							{
+
+							}
+							else 
+							{
+								{
+							
+								}
+							}
+							else 
+							{
+
+							}
+						}
+					continue; 
+				}
+
+			}
+			return (n * factorial(n-1));
+		}
+	
+	}
 }

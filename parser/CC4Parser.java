@@ -23,7 +23,7 @@ public class CC4Parser  {
 public CC4Parser (Scanner token,boolean debug) {
 	String input = token.nameFileInput;
 	String output = token.nameFileOutput;
-	
+	int flagD=0;
 	Decaf parser=null;
 
 	Stack treeParse;
@@ -48,7 +48,8 @@ public CC4Parser (Scanner token,boolean debug) {
 			{
 
 				String aux =(String)errorParse.pop();
-			ptrmsj(aux, output);
+				System.out.println(aux);
+				ptrmsj(aux, "LogErrorParse.txt");
 		
 
 			}
@@ -58,10 +59,10 @@ public CC4Parser (Scanner token,boolean debug) {
 			while(!treeParse.isEmpty())
 			{
 
-				String aux =(String)treeParse.pop();
+			String aux =(String)treeParse.pop();
 			ptrmsj(aux, output);
 			  if (debug)
-            DebugParse(aux);
+            DebugParse(aux,output,flagD);
 
 			}
 
@@ -73,8 +74,12 @@ public CC4Parser (Scanner token,boolean debug) {
 
 
   }
-public void DebugParse(String texto){
-	ptrmsj(" Debugging Scan", outPutName);
+
+public void DebugParse(String texto, String archivo, int flag){
+	  if (flag==0){
+   ptrmsj(" Debugging Parse", archivo);
+flag=1;
+}
     System.out.println("Debugging Parser >"+texto);
   }
 

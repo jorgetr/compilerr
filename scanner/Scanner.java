@@ -18,6 +18,7 @@ public class Scanner  {
   public String nameFileInput;
   public String nameFileOutput;
   public File archivo;
+  int flagDebug=0;
   Stack errorStack;
 public Scanner (String name, String outPutName, boolean debug) {
 
@@ -25,7 +26,7 @@ public Scanner (String name, String outPutName, boolean debug) {
   String dato = "";
 
   LinkedList error=null;
- org.antlr.v4.runtime.CharStream filename=null;
+  org.antlr.v4.runtime.CharStream filename=null;
 
   if (!fname.contains("."))
   fname=fname+".dcf";
@@ -60,8 +61,9 @@ try{
       {
 
 
-        String aux ="<REPORT:  "+(String)errorStack.pop() + "/>";
-      ptrmsj(aux, outPutName);
+      String aux ="<REPORT:  "+(String)errorStack.pop() + "/>";
+      System.out.println(aux);
+      ptrmsj(aux, "LogErrorScan.txt");
   
 
       }
@@ -72,7 +74,7 @@ try{
       if(!dato.equals("")){
         
           if (debug)
-            DebugScan(dato);
+            DebugScan(dato,flagDebug);
 
         ptrmsj(dato, outPutName);
       
@@ -93,9 +95,12 @@ try{
 }
 
 
-public void DebugScan(String texto){
- 
-   ptrmsj(" Debugging Scan", outPutName);
+public void DebugScan(String texto , int flag){
+  if (flag==0){
+   ptrmsj(" Debugging Scan", nameFileOutput);
+flag=1;
+}
+
     System.out.println("Debugging Scan >"+texto);
   }
 
