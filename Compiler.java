@@ -57,6 +57,7 @@ public static void debug (int tag, String etapa, String file){
 		case 0:
 			scan = new Scanner(file,etapa,false);
 			parser = new CC4Parser(scan,false);
+			parser.runParse(false);
 			//Ast ast = new Ast(parser);
 			//semantic = new Semantic(ast);
 			//Irt irt = new Irt(semantic);
@@ -65,10 +66,12 @@ public static void debug (int tag, String etapa, String file){
 		case 1:
 				if(etapa.contains("scan")){
 					scan = new Scanner(file,"fileOut.s",false);
+					scan.runScan(false);
 				}
 				if(etapa.contains("parse")){
 					 scan = new Scanner(file,"fileOut.s",false);	
 					 parser = new CC4Parser(scan,false);
+					 parser.runParse(false);
 				}
 				if(etapa.contains("ast")){
 					scan = new Scanner(file,"fileOut.s",false);	
@@ -119,10 +122,12 @@ public static void debug (int tag, String etapa, String file){
 				
 				if(etapaAc.contains("scan")){
 					scan = new Scanner(file,"fileOut.s",true);
+					scan.runScan(true);
 				}
 				if(etapaAc.contains("parse")){
 					scan = new Scanner(file,"fileOut.s",false);	
 					parser = new CC4Parser(scan,true);
+					parser.runParse(true);
 				}
 				if(etapaAc.contains("ast")){
 					scan = new Scanner(file,"fileOut.s",false);	
@@ -158,13 +163,7 @@ public static void debug (int tag, String etapa, String file){
 				if (aux !=-1)
 				etapaAc=etapa.substring(0,aux);
 
-
-
-
-
-
-
-				}
+			}
 
 			break;
 
@@ -232,7 +231,11 @@ public static void main(String[] args) {
 		
 
 		default:
-		help();
+		if (args[0].contains(".") || !args[0].contains("-") ){
+			String aux = args[0];
+			String nameS = aux.substring(0,aux.indexOf(".")) + ".s";
+				debug(0,nameS,args[0]);
+		}
 
 		break;
 	}

@@ -19,21 +19,43 @@ import java.util.Stack;
 
 
 public class CC4Parser  {
-
-public CC4Parser (Scanner token,boolean debug) {
-	String input = token.nameFileInput;
-	String output = token.nameFileOutput;
+	String input;
+	String output;
 	int flagD=0;
 	Decaf parser=null;
-
 	Stack treeParse;
 	Stack errorParse;
-	ptrmsj("\nstage: parsing", output);
+ static File f;
+  static FileWriter w;
+  static BufferedWriter bw ;
+  static PrintWriter wr ;   
+  
+public CC4Parser (Scanner token,boolean debug) {
+	input = token.nameFileInput;
+	output = token.nameFileOutput;
+	
+		f = new File(output);
+
+		try{
+
+		   w = new FileWriter(f);
+		   bw = new BufferedWriter(w);
+		   wr = new PrintWriter(bw);  
+		}
+		catch(Exception e){
+		      
+		    }
+
 		try{
 			parser = new Decaf(new CommonTokenStream(new DecafLexer(new ANTLRFileStream(input))));
 		}catch(Exception e){
 			
 		}
+	}
+
+public void runParse(boolean debug){	
+
+ptrmsj("\nstage: parsing", output);
 
 		String dato = "";
 		String clase = "Parser";
@@ -70,10 +92,17 @@ public CC4Parser (Scanner token,boolean debug) {
 		}catch(Exception e){
 			
 		}
-	
+try{
+    wr.close();
+    bw.close();
+}catch(Exception e){
+      
+    }
+		
+}	
 
 
-  }
+  
 
 public void DebugParse(String texto, String archivo, int flag){
 	  if (flag==0){
@@ -83,29 +112,18 @@ flag=1;
     System.out.println("Debugging Parser >"+texto);
   }
 
-  void  ptrmsj(String mensaje, String archivo)
+static void  ptrmsj(String mensaje, String archivo)
   {
 
-  File f;
+  
 if (!archivo.contains("."))
   archivo=archivo+".s";
 
-  f = new File(archivo);
-  try{
+ 
+wr.append(mensaje+"\n"); //concatenamos en el archivo sin borrar lo existente  
 
-  FileWriter w = new FileWriter(f,true);
-  BufferedWriter bw = new BufferedWriter(w);
-  PrintWriter wr = new PrintWriter(bw);  
-  
-
-    wr.append(mensaje+"\n"); //concatenamos en el archivo sin borrar lo existente
     
-    wr.close();
-
-    bw.close();
-
-    }catch(IOException e){};
-
+    
 
 
   }

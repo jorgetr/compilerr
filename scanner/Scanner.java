@@ -15,18 +15,26 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 public class Scanner  {
-  public String nameFileInput;
-  public String nameFileOutput;
+  public static String nameFileInput;
+  public static String nameFileOutput;
   public File archivo;
-  int flagDebug=0;
-  Stack errorStack;
-public Scanner (String name, String outPutName, boolean debug) {
+  static int flagDebug=0;
+  static Stack errorStack;
 
-  String fname = name;
-  String dato = "";
+  static String fname;
+  static String  dato = "";
 
   LinkedList error=null;
-  org.antlr.v4.runtime.CharStream filename=null;
+  static org.antlr.v4.runtime.CharStream filename=null;
+  static File f;
+  static FileWriter w;
+  static BufferedWriter bw ;
+  static PrintWriter wr ;  
+
+
+public Scanner (String name, String outPutName, boolean debug) {
+  fname=name;
+  
 
   if (!fname.contains("."))
   fname=fname+".dcf";
@@ -34,11 +42,25 @@ public Scanner (String name, String outPutName, boolean debug) {
   if (!outPutName.contains("."))
   outPutName=outPutName+".s";
 
-
 nameFileInput=fname;
 nameFileOutput=outPutName;
+f = new File(nameFileOutput);
 
-ptrmsj("stage: scanning", outPutName);
+try{
+
+   w = new FileWriter(f);
+   bw = new BufferedWriter(w);
+   wr = new PrintWriter(bw);  
+}
+catch(Exception e){
+      
+    }
+}
+
+
+
+public static void runScan(boolean debug){
+ptrmsj("stage: scanning", nameFileOutput);
   
 try{
   filename =new ANTLRFileStream(fname);
@@ -46,7 +68,7 @@ try{
   e.printStackTrace();
 }
 
-  try{
+try{
       DecafLexer lexer = new DecafLexer(filename);
    while (lexer.nextToken().getType() != Token.EOF || lexer.errorStack.size() > 0){
 
@@ -54,29 +76,18 @@ try{
       dato = lexer.token;
       errorStack = lexer.errorStack;
 
-
-      
-
   while(!errorStack.isEmpty())
       {
-
-
       String aux ="<REPORT:  "+(String)errorStack.pop() + "/>";
       System.out.println(aux);
       ptrmsj(aux, "LogErrorScan.txt");
-  
-
       }
-
-
-     
-
       if(!dato.equals("")){
         
           if (debug)
             DebugScan(dato,flagDebug);
 
-        ptrmsj(dato, outPutName);
+        ptrmsj(dato, nameFileOutput);
       
       }
 
@@ -92,10 +103,21 @@ try{
       System.exit(1);
   }
 
+try{
+    wr.close();
+    bw.close();
+}catch(Exception e){
+      
+    }
+
 }
 
 
-public void DebugScan(String texto , int flag){
+
+
+
+
+public static void DebugScan(String texto , int flag){
   if (flag==0){
    ptrmsj(" Debugging Scan", nameFileOutput);
 flag=1;
@@ -105,29 +127,18 @@ flag=1;
   }
 
 
-void  ptrmsj(String mensaje, String archivo)
+static void  ptrmsj(String mensaje, String archivo)
   {
 
-  File f;
+  
 if (!archivo.contains("."))
   archivo=archivo+".s";
 
-  f = new File(archivo);
-  try{
+ 
+wr.append(mensaje+"\n"); //concatenamos en el archivo sin borrar lo existente  
 
-  FileWriter w = new FileWriter(f,true);
-  BufferedWriter bw = new BufferedWriter(w);
-  PrintWriter wr = new PrintWriter(bw);  
-  
-
-    wr.append(mensaje+"\n"); //concatenamos en el archivo sin borrar lo existente
     
-    wr.close();
-
-    bw.close();
-
-    }catch(IOException e){};
-
+    
 
 
   }

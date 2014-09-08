@@ -1,13 +1,13 @@
-CLI >  archivos default, sin args 
+X callouts
 
-Archivo de salida general con el nombre de entrada de archivo.
+X CLI >  archivos default, sin args 
+
+X Archivo de salida general con el nombre de entrada de archivo.
 
 Presedencia de operadores.
 
-
-Solo escribir en el archivo lo ultimo de cada fase.
-
-output solo el resultado de la ultima fase !!!!!!!!!!
+x Solo escribir en el archivo lo ultimo de cada fase.
+x Coutput solo el resultado de la ultima fase !!!!!!!!!!
 
 
 

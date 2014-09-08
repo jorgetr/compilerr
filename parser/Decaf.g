@@ -79,7 +79,7 @@ statement: (
 			{Tree(getCurrentToken().getLine(),"statement:location asig_op;");}
 		   |((method_call) SEMICOLON)
 		   {Tree(getCurrentToken().getLine(),"statement:methot_call");}
-		   |(IF  OPENAREN (expr) CLOSEPAREN block (ELSE block)+)
+		   |(IF  OPENAREN (expr) CLOSEPAREN block (ELSE block)*)
 		   {Tree(getCurrentToken().getLine(),"statement:if(expr)block (else)*");}
 		   |(FOR  (VAR)  ASSIGN  (expr)   COMA  expr block)
 		   {Tree(getCurrentToken().getLine(),"statement:for var=exprm expr , block");}
@@ -100,9 +100,9 @@ statement: (
 asig_op		: ASSIGN | PLUSASSIGN | MINUSASSIGN
 			{Tree(getCurrentToken().getLine(),"asig_op: =/+=/-=");};
 
-method_call: (method_name OPENAREN (expr|expr COMA) CLOSEPAREN )
+method_call: (method_name OPENAREN (expr|expr COMA)* CLOSEPAREN )
 			{Tree(getCurrentToken().getLine(),"method_call:method_name (expr,*)");}
-			|CALLOUT STRINGLITERAL (COMA (callout_args|callout_args COMA )* )+ 
+			|CALLOUT OPENAREN STRINGLITERAL (COMA (callout_args|callout_args COMA ) )* CLOSEPAREN
 			{Tree(getCurrentToken().getLine(),"method_call:CALLOUT STRINGLITERAL (,callout_args,)*");}
 			;
 
