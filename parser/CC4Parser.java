@@ -53,6 +53,10 @@ public CC4Parser (Scanner token,boolean debug) {
 		}
 	}
 
+public Decaf parser(){
+	return parser;
+}
+
 public void runParse(boolean debug){	
 
 ptrmsj("\nstage: parsing", output);

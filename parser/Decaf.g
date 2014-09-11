@@ -33,13 +33,13 @@ public String lineaParse = "";
 }
 
 programa : 		CLASS PROGRAM OPENBRACE 
-				{Tree(getCurrentToken().getLine(),"program: ClASS PROGRAM");}
+				{Tree(getCurrentToken().getLine(),"program: ClASS PROGRAM OPENBRACE");}
 				(field_decli)*   (method_decli)*  CLOSEBRACE 
-				{Tree(getCurrentToken().getLine(),"CLOSE");}
+				{Tree(getCurrentToken().getLine(),"CLOSEBRACE");}
 			; 
 
 field_decli  : 	type 
-				{Tree(getCurrentToken().getLine()," field_decli: type VAR");}
+				{Tree(getCurrentToken().getLine()," field_decli: type");}
 				(((VAR | (VAR OPENBRACKET INTLITERAL CLOSEBRACKET)))+
 				{Tree(getCurrentToken().getLine()," ( LIT )");}
 				|((VAR  {Tree(getCurrentToken().getLine(),"VAR");}
@@ -136,8 +136,21 @@ arith_op: ADD|SUB|MULT|DIV  {Tree(getCurrentToken().getLine(),"arith_op: + - * /
 
 rel_op:LESSTHAT|GREATTHAT|LESSEQ|GREATEQ  {Tree(getCurrentToken().getLine(),"rel_op: > < >= <=");};
 
-eq_op: EQUAL|NOTEQUAL {Tree(getCurrentToken().getLine(),"eq_op: = !=");};
+eq_op: 	EQUAL
+		{Tree(getCurrentToken().getLine(),"eq_op: = !=");} #equal
+		|NOTEQUAL 
+		{Tree(getCurrentToken().getLine(),"eq_op: = !=");} #noEqual
+		;
 
-cond_op: AND|OR {Tree(getCurrentToken().getLine(),"cond_op: & | ");};
+cond_op: AND
+		{Tree(getCurrentToken().getLine(),"cond_op: &"); #and
+		|OR 
+		{Tree(getCurrentToken().getLine(),"cond_op: & | ") #or;}
+		;
 
-literal: INTLITERAL|CHARLIT|BOOLEANLITERAL {Tree(getCurrentToken().getLine(),"literal: INT CHAR BOOLEAN");};
+literal: INTLITERAL
+			{Tree(getCurrentToken().getLine(),"literal: INT ");}  #intLiteral
+		 |CHARLIT
+		    {Tree(getCurrentToken().getLine(),"literal:  CHAR ");} #charLiteral
+		 |BOOLEANLITERAL {Tree(getCurrentToken().getLine(),"literal: BOOLEAN");} #booleanLiteral
+		 ;

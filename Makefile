@@ -1,7 +1,13 @@
 make:  scanner/DecafLexer.java scanner/DecafLexer.class  scanner/Scanner.class parser/Decaf.java parser/Decaf.class parser/CC4Parser.class    Compiler.class
 
+git.class: add
+
+
 Compiler.class: Compiler.java
 	javac Compiler.java
+		git add . -A
+	git commit -m "update AST"
+	git push -u origin master
 	
 parser/CC4Parser.class: parser/CC4Parser.java
 	javac parser/CC4Parser.java
